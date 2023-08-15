@@ -1,0 +1,12 @@
+
+        {% for list in lists %}
+            <ul class="">
+                <li><b>{{ list.name }}</b>
+                    <ul>
+                        {% for sub_item in list.subCategories %}
+                            <li><b>{{ sub_item.name }}</b></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        {% endfor %}

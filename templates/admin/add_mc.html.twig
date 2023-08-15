@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h2><b>Monthly Cosumption</b></h2>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.weight) }}
+            {{ form_widget(form.weight,{'attr':{'class':'form-control'}}) }}
+        </div>  
+        <div class="form-group">
+            {{ form_label(form.location) }}
+            {{ form_widget(form.location,{'attr':{'class':'form-select'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.category) }}
+            {{ form_widget(form.category,{'attr':{'class':'form-select'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.sub_category) }}
+            {{ form_widget(form.sub_category,{'attr':{'class':'form-select'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.property) }}
+            {{ form_widget(form.property,{'attr':{'class':'form-select'}}) }}
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-danger">Save</button>
+        </div>
+        {{ form_end(form)}}
+    </div>
+{% endblock %}

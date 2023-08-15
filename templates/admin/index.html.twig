@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Add Products</h2>
+        <div class="mt-2">
+        {{ form_start(form, {'attr':{'id':'product_form'}}) }}
+            <div class="form-group">
+                {{ form_label(form.product_name)}}
+                {{ form_widget(form.product_name, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-group mt-2">
+                {{ form_label(form.size)}}
+                {{ form_widget(form.size, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-group mt-2">
+                {{ form_label(form.unit)}}
+                {{ form_widget(form.unit, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-group mt-2">
+                {{ form_label(form.district)}}
+                {{ form_widget(form.district, {'attr':{'class':'form-control district'}}) }}
+            </div>
+            <div class="form-group mt-2">
+                {{ form_label(form.village)}}
+                {{ form_widget(form.village, {'attr':{'class':'form-control'}}) }}
+            </div>
+        {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

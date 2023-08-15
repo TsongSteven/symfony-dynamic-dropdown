@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container mt-3">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class=" btn btn-primary text-white" aria-current="page" href="/add-category"><i class="fa-solid fa-plus"></i> Create Category</a>
+            </li>
+        </ul>
+        <div class="row mt-2">
+            {% for message in app.flashes('message') %}
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-md-6">
+                    <h4 class="bg-dark p-2 text-white"><b>Add Items</b></h4>
+                        {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_label(form.category) }}
+                            {{ form_widget(form.category,{'attr':{'class':'form-select'}}) }}
+                        </div>  
+                        <div class="form-group">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name,{'attr':{'class':'form-control'}}) }}
+                            <span class="text-danger">{{ form_errors(form.name) }}</span>
+                        </div>  
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-success rounded-0"><i class="fa-solid fa-floppy-disk"></i> Save Item</button>
+                        </div>
+                        {{ form_end(form)}}
+            </div>
+            <div class="col-md-6">
+                <h4  class="bg-danger p-2 text-white"><b>Item Lists</b></h4>
+                {{ render(controller('App\\Controller\\ChartController::itemLists')) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

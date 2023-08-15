@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h2><b>Add Category</b></h2>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name,{'attr':{'class':'form-control'}}) }}
+            <span class="text-danger">{{ form_errors(form.name) }}</span>
+        </div>
+        <div class="form-group mt-2">
+            <button type="submit" class="btn btn-success rounded-0">Save Category</button>
+        </div>  
+        {{ form_end(form)}}
+        <p>Please click <a href="/add-items" style="text-decoration: none">here</a> to add items.</p>
+    </div>
+{% endblock %}
