@@ -3,6 +3,6 @@
 Symfony Dynamic Dropdown
 
 Load related data
-Say click on country and it will load related states
+Say click on item and it will load related items
 
 ![demo](https://github.com/symfony-dynamic-dropdown/dynamic-dropdown-gif.gif)
