@@ -2,7 +2,26 @@
 
 Symfony Dynamic Dropdown
 
-Load related data
-Say click on item and it will load related items
+Load related data.
 
-![demo](https://github.com/symfony-dynamic-dropdown/dynamic-dropdown-gif.gif)
+Say click on dropdown and it will populate related items
+<ul>
+  <li>Food
+    <ul>
+      <li>Rice</li>
+      <li>Meat</li>
+      <li>Pizza</li>
+    </ul>
+  </li>
+</ul>
+<ul>
+  <li>Car
+    <ul>
+      <li>Toyota</li>
+      <li>BMW</li>
+      <li>Audi</li>
+    </ul>
+  </li>
+</ul>
+
+<img src="https://github.com/symfony-dynamic-dropdown/dynamic-dropdown-gif.gif">
