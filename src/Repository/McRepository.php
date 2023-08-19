@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\MonthlyConsumption;
+use App\Entity\Mc;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<MonthlyConsumption>
+ * @extends ServiceEntityRepository<Mc>
  *
- * @method MonthlyConsumption|null find($id, $lockMode = null, $lockVersion = null)
- * @method MonthlyConsumption|null findOneBy(array $criteria, array $orderBy = null)
- * @method MonthlyConsumption[]    findAll()
- * @method MonthlyConsumption[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Mc|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Mc|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Mc[]    findAll()
+ * @method Mc[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MonthlyConsumptionRepository extends ServiceEntityRepository
+class McRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, MonthlyConsumption::class);
+        parent::__construct($registry, Mc::class);
     }
 
     //    /**
-    //     * @return MonthlyConsumption[] Returns an array of MonthlyConsumption objects
+    //     * @return Mc[] Returns an array of Mc objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -36,7 +36,7 @@ class MonthlyConsumptionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?MonthlyConsumption
+    //    public function findOneBySomeField($value): ?Mc
     //    {
     //        return $this->createQueryBuilder('m')
     //            ->andWhere('m.exampleField = :val')

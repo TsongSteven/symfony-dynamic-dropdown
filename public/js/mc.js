@@ -17,5 +17,5 @@ $(document).ready(function(){
                 $(res).find('#monthly_consumption_sub_category')
             );
           });
-    });
+   });
 });

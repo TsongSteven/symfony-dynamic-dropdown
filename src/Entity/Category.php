@@ -25,16 +25,20 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: SubCategory::class)] 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: SubCategory::class)]
     private Collection $subCategories;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: MonthlyConsumption::class)]
     private Collection $monthlyConsumptions;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Mc::class)]
+    private Collection $mcs;
+
     public function __construct()
     {
         $this->subCategories = new ArrayCollection();
         $this->monthlyConsumptions = new ArrayCollection();
+        $this->mcs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,6 +112,36 @@ class Category
             // set the owning side to null (unless already changed)
             if ($monthlyConsumption->getCategory() === $this) {
                 $monthlyConsumption->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Mc>
+     */
+    public function getMcs(): Collection
+    {
+        return $this->mcs;
+    }
+
+    public function addMc(Mc $mc): static
+    {
+        if (!$this->mcs->contains($mc)) {
+            $this->mcs->add($mc);
+            $mc->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMc(Mc $mc): static
+    {
+        if ($this->mcs->removeElement($mc)) {
+            // set the owning side to null (unless already changed)
+            if ($mc->getCategory() === $this) {
+                $mc->setCategory(null);
             }
         }
 

@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+        {% for list in lists %}
+            <ul class="">
+                <li><b>{{ list.name }}</b>
+                </li>
+            </ul>
+        {% endfor %}
+
+{% endblock %}

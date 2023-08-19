@@ -25,7 +25,7 @@ class SubCategory
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'subCategories') ] 
+    #[ORM\ManyToOne(inversedBy: 'subCategories') ]
     private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'sub_category', targetEntity: MonthlyConsumption::class)]
@@ -40,6 +40,7 @@ class SubCategory
     {
         return $this->name;
     }
+
     public function getId(): ?int
     {
         return $this->id;

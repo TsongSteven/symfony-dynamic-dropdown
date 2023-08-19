@@ -1,0 +1,32 @@
+        <div class="form-group" id="copy-form-section">
+            <div class="d-flex bd-highlight">
+                <div class="p-2 flex-fill bd-highlight">
+                    {{ form_label(form.category) }}
+                    {{ form_widget(form.category,{'attr':{'class':'form-select'}}) }}   
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                    {{ form_label(form.family) }}
+                    {{ form_widget(form.family,{'attr':{'class':'form-control'}}) }}   
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                    {{ form_label(form.pg) }}
+                    {{ form_widget(form.pg,{'attr':{'class':'form-control'}}) }}   
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                    {{ form_label(form.hostel) }}
+                    {{ form_widget(form.hostel,{'attr':{'class':'form-control'}}) }}   
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                    {{ form_label(form.hotel) }}
+                    {{ form_widget(form.hotel,{'attr':{'class':'form-control'}}) }}   
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                    {{ form_label(form.restaurant) }}
+                    {{ form_widget(form.restaurant,{'attr':{'class':'form-control'}}) }}   
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                    <label></label>
+                    <button type="button" class="remove-btn btn btn-danger text-white" ><i class="fa-solid fa-minus"></i></button>  
+                </div>
+            </div>
+        </div>  

@@ -1,0 +1,2 @@
+twig:
+    form_themes: ['admin/_mc_theme.html.twig']

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chart{% endblock %}
+
+{% block body %}
+<div class="container mt-3 p-5">
+<div class="alert alert-info">
+    <h4>Loading Monthly Consumption for <b>{{ lists.name }}</b></h4>
+</div>
+
+{% set categoryName = [] %}
+    <table class="table table-bordered border-primary bg-white text-center">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category</th>
+            <th scope="col">Family</th>
+            <th scope="col">Pg</th>
+            <th scope="col">Hostel</th>
+            <th scope="col">Hotel</th>
+            <th scope="col">Restaurant</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mcs in lists.mcs %}
+            {% set categoryName = categoryName|merge([mcs.category.name]) %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td><b class="text-danger">{{ mcs.category.name }}</b></td>
+                    <td>{{ mcs.family }}</td>
+                    <td>{{ mcs.pg }}</td>
+                    <td>{{ mcs.hostel }}</td>
+                    <td>{{ mcs.hotel }}</td>
+                    <td>{{ mcs.restaurant }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="container">
+    <div class="row">
+    {% for mcs in lists.mcs %}  
+    <div class="col-md-4">
+        <div class="card mt-3">
+            <h4 class="card-header text-danger">{{  mcs.category.name }}</h4>
+            <div class="card-body">
+                {{ include("chart/_chart.html.twig",{ index : loop.index }) }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

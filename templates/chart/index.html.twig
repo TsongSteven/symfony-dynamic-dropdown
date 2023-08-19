@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chart{% endblock %}
+
+{% block body %}
+<div class="container mt-3 p-5">
+{% set categoryName = [] %}
+{% set rice = [] %}
+  {% for location in locations %}
+    <a href = "{{ path('location-based-data', {id :  location.id }) }}" class="btn btn-success">{{ location.name }}</a>
+    {% for mcs in location.mcs %}
+      {% set categoryName = categoryName|merge([mcs.category.name]) %}
+    {% endfor %}
+  {% endfor %}
+</div>
+{% endblock %}

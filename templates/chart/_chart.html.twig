@@ -1,0 +1,37 @@
+{% set momnthlyConsumptionData = [] %}
+{% set momnthlyConsumptionData = momnthlyConsumptionData|merge([mcs.family, mcs.pg, mcs.hostel, mcs.hotel, mcs.restaurant]) %}
+
+<canvas id="myChart_{{ index }}"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script>
+  const ctx_{{ index }} = document.getElementById('myChart_{{ index }}');
+  const data_{{ index }} = {
+    labels: [
+      'Family',
+      'Pg',
+      'Hostel',
+      'Hotel',
+      'Restaurant'
+    ],
+    datasets: [{
+      label: 'Consumption of {{ mcs.category.name }}',
+      data: {{ momnthlyConsumptionData|json_encode|raw }},
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)',
+        'rgb(205, 205, 16)',
+        'rgb(185, 05, 16)'
+      ],
+      hoverOffset: 4
+    }]
+  };
+  new Chart(ctx_{{ index }}, {
+    
+    type: 'pie',
+    data: data_{{ index }},
+    
+  });
+
+</script>

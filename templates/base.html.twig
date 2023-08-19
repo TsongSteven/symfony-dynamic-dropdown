@@ -26,25 +26,31 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="/"><b>Home</b></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="/add-category"><b>Add Category</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/chart"><b>Monthly Consumption Lists</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/add-mcs"><b>Add Monthly Consumption</b></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="/add-category">Add Category</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
-        <li class="nav-item">
+        {# <li class="nav-item">
           <a class="nav-link disabled">Disabled</a>
-        </li>
+        </li> #}
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -56,8 +62,6 @@
 <div style="background-image:url(/images/grocery.jpg);
 		background-repeat:repeat;
 		background-attachment:fixed;
-
-		line-height:2em;
     height: 1080px;
     position: relative;
     ">
@@ -67,7 +71,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset("js/app.js") }}"></script>
-    <script src="{{ asset("js/chart.js") }}"></script>
+    {# <script src="{{ asset("js/chart.js") }}"></script> #}
     <script src="{{ asset("js/mc.js") }}"></script>
   </body>
 </html>

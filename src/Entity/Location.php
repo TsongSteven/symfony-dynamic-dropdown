@@ -21,10 +21,18 @@ class Location
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: MonthlyConsumption::class)]
     private Collection $monthlyConsumptions;
 
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Mc::class)]
+    private Collection $mcs;
+
     public function __construct()
     {
         $this->monthlyConsumptions = new ArrayCollection();
+        $this->mcs = new ArrayCollection();
     }
+    // public function __toString(): string
+    // {
+    //   return $this->name;
+    // }
 
     public function getId(): ?int
     {
@@ -67,6 +75,36 @@ class Location
             // set the owning side to null (unless already changed)
             if ($monthlyConsumption->getLocation() === $this) {
                 $monthlyConsumption->setLocation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Mc>
+     */
+    public function getMcs(): Collection
+    {
+        return $this->mcs;
+    }
+
+    public function addMc(Mc $mc): static
+    {
+        if (!$this->mcs->contains($mc)) {
+            $this->mcs->add($mc);
+            $mc->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMc(Mc $mc): static
+    {
+        if ($this->mcs->removeElement($mc)) {
+            // set the owning side to null (unless already changed)
+            if ($mc->getLocation() === $this) {
+                $mc->setLocation(null);
             }
         }
 

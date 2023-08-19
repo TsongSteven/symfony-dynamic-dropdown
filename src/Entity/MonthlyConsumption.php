@@ -30,6 +30,9 @@ class MonthlyConsumption
     #[ORM\ManyToOne(inversedBy: 'monthlyConsumptions')]
     private ?Property $property = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $unit = null;
+
     // public function __construct()
     // {
     //     $this->location = new ArrayCollection();
@@ -96,6 +99,18 @@ class MonthlyConsumption
     public function setProperty(?Property $property): static
     {
         $this->property = $property;
+
+        return $this;
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(string $unit): static
+    {
+        $this->unit = $unit;
 
         return $this;
     }
