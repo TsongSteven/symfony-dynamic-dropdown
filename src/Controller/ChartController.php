@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Location;
 use App\Entity\Category;
+use App\Entity\Population;
 use App\Entity\SubCategory;
 use App\Entity\Property;
 use App\Entity\Mc;
@@ -111,39 +112,52 @@ class ChartController extends AbstractController
         ]);
     }
 
-    #[Route('/add-mcs', name: 'mcs')]
+    #[Route('/add-mcs', name: 'mcs', methods:['GET','POST'])]
     public function addMcs(Request $request, EntityManagerInterface $em)
     {
-        $loc = [];
-        $location = new Location();
+        $location = [];
+        $region = [];
         $form = $this->createForm(McsType::class, null);
         $form->handleRequest($request);
+        $category = $em->getRepository(Category::class)->findAll();
         if($form->isSubmitted() && $form->isValid()) {
-            foreach ($form->getData() as $formData) {
-                $loc = $formData['__name__']->getLocation();
-                unset($formData['__name__']);
-                foreach($formData as $mc) {
+            if($form->getData()['mcs']){
+
+                $populationCount = new Population;
+                $location = $form->getData()['location'];
+                $region = $form->getData()['region'];
+                $populationCount->setFamilyCount($form->getData()['family_count']);
+                $populationCount->setPgCount($form->getData()['pg_count']);
+                $populationCount->setHostelCount($form->getData()['hostel_count']);
+                $populationCount->setHotelCount($form->getData()['hotel_count']);
+                $populationCount->setRestaurantCount($form->getData()['restaurant_count']);
+                $populationCount->setLocation($form->getData()['location']);
+                $populationCount->setRegion($form->getData()['region']);
+                $em->persist($populationCount);
+
+                foreach($form->getData()['mcs'] as $mc) {        
                     $monthlyConsumption = new Mc();
-
-                    $monthlyConsumption->setFamily($mc->getFamily());
-                    $monthlyConsumption->setPg($mc->getPg());
-                    $monthlyConsumption->setHostel($mc->getHostel());
-                    $monthlyConsumption->setHotel($mc->getHotel());
-                    $monthlyConsumption->setRestaurant($mc->getRestaurant());
-                    $monthlyConsumption->setCategory($mc->getCategory());
-                    $monthlyConsumption->setLocation($loc);
-                    $em->persist($monthlyConsumption);
+                    $monthlyConsumption->setFamily($mc['family']);
+                    $monthlyConsumption->setPg($mc['pg']);
+                    $monthlyConsumption->setHostel($mc['hostel']);
+                    $monthlyConsumption->setHotel($mc['hotel']);
+                    $monthlyConsumption->setRestaurant($mc['restaurant']);
+                    $monthlyConsumption->setCategory($mc['category']);
+                    $monthlyConsumption->setUnit($mc['unit']);
+                    $monthlyConsumption->setLocation($location);
+                    $monthlyConsumption->setRegion($region);
+                    $em->persist($monthlyConsumption);  
                 }
+
+                $em->flush();
+                $this->addFlash('message', 'Item(s) Added!');
+    
+                return $this->redirectToRoute('mcs');
             }
-
-            $em->flush();
-            $this->addFlash('message', 'Item(s) Added!');
-
-            return $this->redirectToRoute('mcs');
-
         }
         return $this->render('admin/add_mcs.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'category' => count($category)
         ]);
     }
 

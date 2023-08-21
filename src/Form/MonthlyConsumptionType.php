@@ -77,6 +77,12 @@ class MonthlyConsumptionType extends AbstractType
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) use ($formModifier) {
                 $category = $event->getForm()->getData();
+                $subCategories = null === $category ? [] : $category->getSubCategories();
+                $subCategoryChoices = [];
+                foreach ($subCategories as $subCategory) {
+                    $subCategoryChoices[$subCategory->getId()] = $subCategory->getCategory();
+                }
+                dd($subCategories);
                 $formModifier($event->getForm()->getParent(), $category);
             }
         );

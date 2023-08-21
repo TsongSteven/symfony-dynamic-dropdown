@@ -24,15 +24,18 @@ class Location
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Mc::class)]
     private Collection $mcs;
 
+    #[ORM\ManyToOne(inversedBy: 'location')]
+    private ?Region $region = null;
+
     public function __construct()
     {
         $this->monthlyConsumptions = new ArrayCollection();
         $this->mcs = new ArrayCollection();
     }
-    // public function __toString(): string
-    // {
-    //   return $this->name;
-    // }
+    public function __toString(): string
+    {
+      return $this->name;
+    }
 
     public function getId(): ?int
     {
@@ -107,6 +110,18 @@ class Location
                 $mc->setLocation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): static
+    {
+        $this->region = $region;
 
         return $this;
     }

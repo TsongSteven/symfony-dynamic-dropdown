@@ -1,8 +1,8 @@
-        <div class="form-group" id="copy-form-section">
+        <div class="form-group copy-form-section" id="copy-form-section">
             <div class="d-flex bd-highlight">
                 <div class="p-2 flex-fill bd-highlight">
                     {{ form_label(form.category) }}
-                    {{ form_widget(form.category,{'attr':{'class':'form-select'}}) }}   
+                    {{ form_widget(form.category,{'attr':{'class':'form-select', 'id':'category_select'}}) }}   
                 </div>
                 <div class="p-2 flex-fill bd-highlight">
                     {{ form_label(form.family) }}
@@ -23,6 +23,10 @@
                 <div class="p-2 flex-fill bd-highlight">
                     {{ form_label(form.restaurant) }}
                     {{ form_widget(form.restaurant,{'attr':{'class':'form-control'}}) }}   
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                    {{ form_label(form.unit) }}
+                    {{ form_widget(form.unit,{'attr':{'class':'form-select'}}) }}   
                 </div>
                 <div class="p-2 flex-fill bd-highlight">
                     <label></label>

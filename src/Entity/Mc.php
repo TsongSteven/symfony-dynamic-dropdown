@@ -34,6 +34,12 @@ class Mc
     #[ORM\ManyToOne(inversedBy: 'mcs')]
     private ?Location $location = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $unit = null;
+
+    #[ORM\ManyToOne(inversedBy: 'mc')]
+    private ?Region $region = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +125,30 @@ class Mc
     public function setLocation(?Location $location): static
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(string $unit): static
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): static
+    {
+        $this->region = $region;
 
         return $this;
     }
