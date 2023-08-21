@@ -1,4 +1,4 @@
-# symfony-dynamic-dropdown
+# symfony-dynamic-dropdown-chart-collectiontype
 
 Symfony Dynamic Dropdown
 
