@@ -24,4 +24,5 @@ Say click on dropdown and it will populate related items
   </li>
 </ul>
 
+Symfony Embed Form Colelction
 <img src="https://github.com/symfony-dynamic-dropdown/dynamic-dropdown-gif.gif">
