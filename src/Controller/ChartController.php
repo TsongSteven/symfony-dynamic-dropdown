@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Location;
+use App\Entity\Region;
 use App\Entity\Category;
 use App\Entity\Population;
 use App\Entity\SubCategory;
@@ -15,6 +16,7 @@ use App\Form\MonthlyConsumptionType;
 use App\Form\CategoryType;
 use App\Form\LocationType;
 use App\Form\SubCategoryType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,8 +28,12 @@ class ChartController extends AbstractController
     #[Route('/chart', name: 'app_chart')]
     public function index(EntityManagerInterface $em): Response
     {
-        $locations = $em->getRepository(Location::class)->findAll();
-        return $this->render('chart/index.html.twig', ['locations' => $locations]);
+        $regions = $em->getRepository(Region::class)->findAll();
+        $populations = $em->getRepository(Population::class)->findAll();
+        return $this->render('chart/index.html.twig', [
+            'regions' => $regions,
+            'populations' => $populations,
+        ]);
     }
 
     #[Route('/add-category', name:'add-category')]
@@ -96,7 +102,7 @@ class ChartController extends AbstractController
     public function itemLists(EntityManagerInterface $em)
     {
         $lists = $em->getRepository(Category::class)->findAll();
-
+        
         return $this->render('admin/item-lists.html.twig', [
             'lists' => $lists
         ]);
@@ -121,9 +127,9 @@ class ChartController extends AbstractController
         $form->handleRequest($request);
         $category = $em->getRepository(Category::class)->findAll();
         if($form->isSubmitted() && $form->isValid()) {
-            if($form->getData()['mcs']){
+            if($form->getData()['mcs']) {
 
-                $populationCount = new Population;
+                $populationCount = new Population();
                 $location = $form->getData()['location'];
                 $region = $form->getData()['region'];
                 $populationCount->setFamilyCount($form->getData()['family_count']);
@@ -135,7 +141,7 @@ class ChartController extends AbstractController
                 $populationCount->setRegion($form->getData()['region']);
                 $em->persist($populationCount);
 
-                foreach($form->getData()['mcs'] as $mc) {        
+                foreach($form->getData()['mcs'] as $mc) {
                     $monthlyConsumption = new Mc();
                     $monthlyConsumption->setFamily($mc['family']);
                     $monthlyConsumption->setPg($mc['pg']);
@@ -146,12 +152,12 @@ class ChartController extends AbstractController
                     $monthlyConsumption->setUnit($mc['unit']);
                     $monthlyConsumption->setLocation($location);
                     $monthlyConsumption->setRegion($region);
-                    $em->persist($monthlyConsumption);  
+                    $em->persist($monthlyConsumption);
                 }
 
                 $em->flush();
                 $this->addFlash('message', 'Item(s) Added!');
-    
+
                 return $this->redirectToRoute('mcs');
             }
         }
@@ -160,6 +166,72 @@ class ChartController extends AbstractController
             'category' => count($category)
         ]);
     }
+
+
+    #[Route('/edit-mcs/{locationId}/{regionId}', name: 'edit-mcs', methods:['GET','POST'])]
+    public function editMcs(Request $request, EntityManagerInterface $em, $locationId, $regionId)
+    {
+        $location = $em->getRepository(Location::class)->find($locationId);
+        $population = $em->getRepository(Population::class)->find($locationId);
+        $region = $em->getRepository(Region::class)->find($regionId);
+        $mcs = $em->getRepository(Mc::class)->find($locationId);
+        $form = $this->createForm(McsType::class,null);
+        $monthlyConsumption = new ArrayCollection();
+        foreach($location->getMcs() as $mc)
+        {
+            $monthlyConsumption->add($mc);
+        }
+
+        $form->get('mcs')->setData($monthlyConsumption);
+        $form->get('region')->setData($region);
+        $form->get('family_count')->setData($population->getFamilyCount());
+        $form->get('pg_count')->setData($population->getPgCount());
+        $form->get('hotel_count')->setData($population->getHotelCount());
+        $form->get('hostel_count')->setData($population->getHostelCount());
+        $form->get('restaurant_count')->setData($population->getRestaurantCount());
+        $form->handleRequest($request);
+        $category = $em->getRepository(Category::class)->findAll();
+        if($form->isSubmitted() && $form->isValid()) {
+            if($form->getData()['mcs']) {
+
+                $populationCount = new Population();
+    
+                $populationCount->setFamilyCount($form->getData()['family_count']);
+                $populationCount->setPgCount($form->getData()['pg_count']);
+                $populationCount->setHostelCount($form->getData()['hostel_count']);
+                $populationCount->setHotelCount($form->getData()['hotel_count']);
+                $populationCount->setRestaurantCount($form->getData()['restaurant_count']);
+                $populationCount->setLocation($form->getData()['location']);
+                $populationCount->setRegion($form->getData()['region']);
+                $em->persist($populationCount);
+
+                foreach($form->getData()['mcs'] as $mc) {
+                    $monthlyConsumption = new Mc();
+                    $monthlyConsumption->setFamily($mc['family']);
+                    $monthlyConsumption->setPg($mc['pg']);
+                    $monthlyConsumption->setHostel($mc['hostel']);
+                    $monthlyConsumption->setHotel($mc['hotel']);
+                    $monthlyConsumption->setRestaurant($mc['restaurant']);
+                    $monthlyConsumption->setCategory($mc['category']);
+                    $monthlyConsumption->setUnit($mc['unit']);
+                    $monthlyConsumption->setLocation($form->getData()['location']);
+                    $monthlyConsumption->setRegion($form->getData()['region']);
+                    $em->persist($monthlyConsumption);
+                }
+
+                $em->flush();
+                $this->addFlash('message', 'Item(s) Updated!');
+
+                return $this->redirectToRoute('mcs');
+            }
+        }
+        return $this->render('admin/add_mcs.html.twig', [
+            'form' => $form->createView(),
+            'category' => count($category)
+        ]);
+    }
+
+
 
     #[Route('/test', name: 'test')]
     public function test(Request $request, EntityManagerInterface $em)
@@ -182,8 +254,10 @@ class ChartController extends AbstractController
     {
         $location = new Location();
         $lists =  $em->getRepository(Location::class)->find($id);
+        $population =  $em->getRepository(Population::class)->find($id);
         return $this->render('chart/location-based-data.html.twig', [
-            'lists' => $lists
+            'lists' => $lists,
+            'population' => $population
         ]);
     }
 }

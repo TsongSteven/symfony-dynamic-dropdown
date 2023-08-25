@@ -24,17 +24,21 @@ class Location
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Mc::class)]
     private Collection $mcs;
 
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Population::class)]
+    private Collection $population;
+
     #[ORM\ManyToOne(inversedBy: 'location')]
     private ?Region $region = null;
 
     public function __construct()
     {
         $this->monthlyConsumptions = new ArrayCollection();
+        $this->population = new ArrayCollection();
         $this->mcs = new ArrayCollection();
     }
     public function __toString(): string
     {
-      return $this->name;
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -122,6 +126,36 @@ class Location
     public function setRegion(?Region $region): static
     {
         $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Population>
+     */
+    public function getPopulation(): Collection
+    {
+        return $this->population;
+    }
+
+    public function addPopulation(Population $population): static
+    {
+        if (!$this->population->contains($population)) {
+            $this->population->add($population);
+            $population->setPopulation($this);
+        }
+
+        return $this;
+    }
+
+    public function removePopulation(Population $population): static
+    {
+        if ($this->population->removeElement($population)) {
+            // set the owning side to null (unless already changed)
+            if ($population->getPopulation() === $this) {
+                $population->setPopulation(null);
+            }
+        }
 
         return $this;
     }

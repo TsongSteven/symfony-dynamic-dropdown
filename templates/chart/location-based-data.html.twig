@@ -3,8 +3,34 @@
 {% block title %}Chart{% endblock %}
 
 {% block body %}
-<div class="container mt-3 p-5">
-<div class="alert alert-info">
+<div class="container mt-3 pt-5">
+<div class="justify-content-end pt-2 pb-2">
+    <a href="{{ path('edit-mcs',{locationId : lists.id, regionId: lists.region.id }) }}" class="btn btn-success "><i class="fa-solid fa-pen-to-square"></i> Edit current Consumer</a>
+</div>
+<div class="alert bg-dark text-white">
+    <h4>Consumer's in <b>{{ lists.name }}</b></h4>
+</div>
+    <table class="table table-bordered border-primary bg-white text-center">
+        <thead>
+            <tr>
+            <th scope="col">Family</th>
+            <th scope="col">Pg</th>
+            <th scope="col">Hostel</th>
+            <th scope="col">Hotel</th>
+            <th scope="col">Restaurant</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{ population.familyCount }}</td>
+                    <td>{{ population.pgCount }}</td>
+                    <td>{{ population.hostelCount }}</td>
+                    <td>{{ population.hotelCount }}</td>
+                    <td>{{ population.restaurantCount }}</td>
+                </tr>
+        </tbody>
+    </table>
+<div class="alert bg-dark text-white">
     <h4>Loading Monthly Consumption for <b>{{ lists.name }}</b></h4>
 </div>
 
@@ -19,6 +45,7 @@
             <th scope="col">Hostel</th>
             <th scope="col">Hotel</th>
             <th scope="col">Restaurant</th>
+            <th scope="col">Unit</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +58,8 @@
                     <td>{{ mcs.pg }}</td>
                     <td>{{ mcs.hostel }}</td>
                     <td>{{ mcs.hotel }}</td>
-                    <td>{{ mcs.restaurant }}</td>
+                    <td>{{ mcs.hotel }}</td>
+                    <td>{{ mcs.unit }}</td>
                 </tr>
             {% endfor %}
         </tbody>

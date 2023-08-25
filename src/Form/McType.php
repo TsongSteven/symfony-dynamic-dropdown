@@ -24,11 +24,11 @@ class McType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('family')
-            ->add('pg')
-            ->add('hostel')
-            ->add('hotel')
-            ->add('restaurant')
+            ->add('family',TextType::class)
+            ->add('pg',TextType::class)
+            ->add('hostel',TextType::class)
+            ->add('hotel',TextType::class)
+            ->add('restaurant',TextType::class)
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => function (Category $category) {
@@ -39,8 +39,12 @@ class McType extends AbstractType
                 'choices' => [
                     'Kilo Gram' => 'kg',
                     'Litre' => 'litre',
+                    'Pouch(1 Ltr)' => 'pouch1ltr',
+                    'Packet(1 Kg)' => 'packet1kg',
+                    'Packet(5 Kg)' => 'packet5kg',
                     'Tonne' => 'tonne',
-                    'Dozen' => 'dozen'
+                    'Bag(30 Kg)' => 'bag30kg',
+                    'Bag(50 Kg)' => 'bag50kg'
                 ]
             ])
         ;
@@ -49,7 +53,7 @@ class McType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // 'data_class' => Mc::class,
+            'data_class' => Mc::class,
         ]);
     }
 }

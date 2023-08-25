@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
-use App\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,16 +14,6 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
-        ]);
-    }
-    #[Route('/admin/add-product', name: 'add-products', methods: ['GET','POST'])]
-    public function addProducts(Request $request): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-        return $this->render('admin/index.html.twig', [
-            'form' => $form,
         ]);
     }
 }

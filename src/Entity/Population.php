@@ -28,10 +28,10 @@ class Population
     #[ORM\Column(length: 255)]
     private ?string $restaurant_count = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'population')]
     private ?Location $location = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'population')]
     private ?Region $region = null;
 
     public function getId(): ?int

@@ -24,10 +24,14 @@ class Region
     #[ORM\OneToMany(mappedBy: 'region', targetEntity: Mc::class)]
     private Collection $mc;
 
+    #[ORM\OneToMany(mappedBy: 'region', targetEntity: Population::class)]
+    private Collection $population;
+
     public function __construct()
     {
         $this->location = new ArrayCollection();
         $this->mc = new ArrayCollection();
+        $this->population = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +105,36 @@ class Region
             // set the owning side to null (unless already changed)
             if ($mc->getRegion() === $this) {
                 $mc->setRegion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Population>
+     */
+    public function getPopulation(): Collection
+    {
+        return $this->population;
+    }
+
+    public function addPopulation(Population $population): static
+    {
+        if (!$this->population->contains($population)) {
+            $this->population->add($population);
+            $population->setRegion($this);
+        }
+
+        return $this;
+    }
+
+    public function removePopulation(Population $population): static
+    {
+        if ($this->population->removeElement($population)) {
+            // set the owning side to null (unless already changed)
+            if ($population->getRegion() === $this) {
+                $population->setRegion(null);
             }
         }
 

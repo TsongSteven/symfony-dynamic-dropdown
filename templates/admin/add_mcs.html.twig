@@ -2,6 +2,13 @@
 {% form_theme form _self 'admin/_mc_theme.html.twig' %}
 {% block body %}
     <div class="container mt-3">
+        {% for message in app.flashes('message') %}
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
     {{ form_start(form) }}
                 <div class="card">
                     <div class="card-body">
@@ -17,7 +24,7 @@
             </div>        
             <div class="card mt-2">
                 <div class="card-body">
-                 <h5 class="card-title  text-danger">Population Count</h5>
+                 <h5 class="card-title  text-danger"><b>Consumer</b></h5>
                     <div class="d-flex bd-highlight">
                 <div class="p-2 flex-fill bd-highlight">
                     {{ form_row(form.family_count,{'attr':{'class':'form-control'}}) }}
@@ -39,7 +46,7 @@
             </div>
         <div class="card mt-2">
             <div class="card-body">
-                <h5 class="card-title  text-danger">Items</h5>
+                <h5 class="card-title  text-danger"><b>Items</b></h5>
                 <div class="mcs" data-index="{{ form.mcs|length > 0 ? form.mcs|last.vars.name + 1 : 0 }}"
    data-prototype="{{ include("admin/_mc_theme.html.twig", {form: form.mcs.vars.prototype})|e("html_attr") }}"> 
             {% for mc in form.mcs %}
